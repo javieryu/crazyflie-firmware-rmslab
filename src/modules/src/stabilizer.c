@@ -51,6 +51,7 @@
 #include "position_controller.h"
 #include "altitude_hold.h"
 
+#include "vl6180.h"
 
 /**
  * Defines in what divided update rate should the attitude
@@ -110,6 +111,7 @@ static float temperature; // temp from barometer in celcius
 static float pressure;    // pressure from barometer in bar
 static float asl;         // raw Altitude over Sea Level from pressure sensor, in meters. Has an offset.
 static estimate_t estimatedPosition;
+static uint8_t range;
 
 
 void stabilizerInit(void)
@@ -121,6 +123,7 @@ void stabilizerInit(void)
   imu6Init();
   sensfusion6Init();
   attitudeControllerInit();
+  vl6180Init();
 #if defined(SITAW_ENABLED)
   sitAwInit();
 #endif
@@ -279,6 +282,10 @@ static void stabilizerTask(void* param)
           positionControllerUpdate(&actuatorThrust, &estimatedPosition, ALTHOLD_UPDATE_DT);
         } else {
           commanderGetThrust(&actuatorThrust);
+        }
+
+        if (vl6180Test()){
+        	range = vl61800GetRange();
         }
 
         altHoldCounter = 0;
@@ -477,4 +484,9 @@ LOG_ADD(LOG_INT32, m1, &motorPowerM1)
 LOG_ADD(LOG_INT32, m2, &motorPowerM2)
 LOG_ADD(LOG_INT32, m3, &motorPowerM3)
 LOG_GROUP_STOP(motor)
+
+LOG_GROUP_START(rangefinder)
+LOG_ADD(LOG_INT8, range, &range)
+LOG_GROUP_STOP(rangefinder)
+
 

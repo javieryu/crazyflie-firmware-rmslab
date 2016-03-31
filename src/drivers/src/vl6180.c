@@ -64,6 +64,10 @@ bool vl6180Init(I2C_Dev *i2cPort){
 	return 0;
 }
 
+bool vl6180Test(void){
+	return isInit;
+}
+
 uint8_t vl6180GetRegister(uint16_t registerAddress){
 	uint8_t data;
 	//Read a byte from the register on the device
@@ -86,7 +90,7 @@ void vl6180SetRegister16(uint16_t registerAddress, uint16_t data){
 	i2cdevWrite(I2Cx,devAddr,registerAddress,2,&data);
 }
 
-uint16_t vl6180GetRange(void){
+uint8_t vl6180GetRange(void){
 	return vl6180GetRegister(VL6180_RANGE_RESULT_REG);
 }
 

@@ -22,7 +22,7 @@
 
 bool vl6180Init(I2C_Dev *i2cPort);
 
-//bool vl6180Test(void);
+bool vl6180Test(void);
 //
 //bool vl6180TestConnection(void);
 
@@ -34,6 +34,6 @@ void vl6180SetRegister(uint16_t, uint8_t);
 
 void vl6180SetRegister16(uint16_t,uint16_t);
 
-uint16_t vl6180GetRange(void);
+uint8_t vl6180GetRange(void);
 
 #endif //VL6180

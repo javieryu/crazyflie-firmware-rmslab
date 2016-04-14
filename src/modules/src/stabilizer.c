@@ -50,7 +50,6 @@
 #include "position_estimator.h"
 #include "position_controller.h"
 #include "altitude_hold.h"
-
 #include "vl6180.h"
 
 /**
@@ -123,7 +122,7 @@ void stabilizerInit(void)
   imu6Init();
   sensfusion6Init();
   attitudeControllerInit();
-  //vl6180Init();
+  //vl6180Init(
 #if defined(SITAW_ENABLED)
   sitAwInit();
 #endif
@@ -284,9 +283,9 @@ static void stabilizerTask(void* param)
           commanderGetThrust(&actuatorThrust);
         }
 
-//        if (vl6180Test()){
-//        	range = vl61800GetRange();
-//        }
+        if (vl6180Test()==1){
+        	range = vl6180GetRange();
+        }
 
         altHoldCounter = 0;
       }
@@ -485,8 +484,8 @@ LOG_ADD(LOG_INT32, m2, &motorPowerM2)
 LOG_ADD(LOG_INT32, m3, &motorPowerM3)
 LOG_GROUP_STOP(motor)
 
-//LOG_GROUP_START(rangefinder)
-//LOG_ADD(LOG_INT8, range, &range)
-//LOG_GROUP_STOP(rangefinder)
+LOG_GROUP_START(rangefinder)
+LOG_ADD(LOG_INT8, range, &range)
+LOG_GROUP_STOP(rangefinder)
 
 

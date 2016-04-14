@@ -14,19 +14,19 @@ static uint8_t devAddr;
 static I2C_Dev *I2Cx;
 static bool isInit;
 
-bool vl6180Init(I2C_Dev *i2cPort){
+void vl6180Init(I2C_Dev *i2cPort){
 
 	uint8_t data;
 
-	if(isInit)
-		return 0;
+//	if(isInit)
+//		return 0;
 
 	I2Cx = i2cPort;
 	devAddr = VL6180_I2C_ADDR;
 
 	data = vl6180getRegister(VL6180_SYSTEM_FRESH_OUT_OF_RESET);
-	if(data != 1)
-		return 0;
+//	if(data != 1)
+//		return 0;
 
 	vl6180SetRegister(0x0207, 0x01);
 	vl6180SetRegister(0x0207, 0x01);
@@ -61,7 +61,7 @@ bool vl6180Init(I2C_Dev *i2cPort){
 	vl6180SetRegister(0x0030, 0x00);
 
 	isInit = 1;
-	return 0;
+//	return 0;
 }
 
 bool vl6180Test(void){

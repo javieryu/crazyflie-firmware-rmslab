@@ -20,7 +20,7 @@
 #define VL6180_RANGE_RESULT_REG 0x062
 
 
-bool vl6180Init(I2C_Dev *i2cPort);
+void vl6180Init(I2C_Dev *i2cPort);
 
 bool vl6180Test(void);
 //

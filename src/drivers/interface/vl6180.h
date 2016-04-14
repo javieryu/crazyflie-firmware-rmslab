@@ -26,7 +26,7 @@ bool vl6180Test(void);
 //
 //bool vl6180TestConnection(void);
 
-uint8_t vl6180GetRegister(uint8_t);
+uint8_t vl6180GetRegister(uint16_t);
 
 uint16_t vl6180GetRegister16(uint16_t);
 

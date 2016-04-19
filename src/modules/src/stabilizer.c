@@ -145,6 +145,7 @@ bool stabilizerTest(void)
   pass &= imu6Test();
   pass &= sensfusion6Test();
   pass &= attitudeControllerTest();
+  pass &= vl6180Test();
 
   return pass;
 }

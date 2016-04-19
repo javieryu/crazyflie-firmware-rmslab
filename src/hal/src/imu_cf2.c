@@ -51,7 +51,7 @@
 #define IMU_ENABLE_PRESSURE_LPS25H
 #define IMU_ENABLE_MAG_AK8963
 //#define IMU_MPU6500_DLPF_256HZ
-#define VL6180_ENABLE_RANGE_FINDER
+//#define VL6180_ENABLE_RANGE_FINDER
 
 #define IMU_GYRO_FS_CFG       MPU6500_GYRO_FS_2000
 #define IMU_DEG_PER_LSB_CFG   MPU6500_DEG_PER_LSB_2000
@@ -149,7 +149,7 @@ void imu6Init(void)
 
   i2cdevInit(I2C3_DEV);
   mpu6500Init(I2C3_DEV);
-  vl6180Init(I2C3_DEV);
+  vl6180Init(I2C1_DEV);
   if (mpu6500TestConnection() == true)
   {
     DEBUG_PRINT("MPU9250 I2C connection [OK].\n");

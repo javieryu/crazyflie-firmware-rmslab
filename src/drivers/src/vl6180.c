@@ -95,11 +95,11 @@ void vl6180Init(I2C_Dev *i2cPort){
 }
 
 bool vl6180Test(void){
-	if (isInit) {
-		DEBUG_PRINT("Range sensor initialized %d", 1);
-	} else {
-		DEBUG_PRINT("Range sensor not initialized %d", 0);
-	}
+//	if (isInit) {
+//		DEBUG_PRINT("Range sensor initialized %d", 1);
+//	} else {
+//		DEBUG_PRINT("Range sensor not initialized %d", 0);
+//	}
 	return isInit;
 }
 

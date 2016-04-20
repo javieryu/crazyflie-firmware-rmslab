@@ -159,6 +159,11 @@ void imu6Init(void)
     DEBUG_PRINT("MPU9250 I2C connection [FAIL].\n");
   }
 
+  if (vl6180Test() == 1) {
+	  DEBUG_PRINT("Range sensor initialized %d", 1);
+  } else {
+	  DEBUG_PRINT("Range sensor not initialized %d", 0);
+  }
   mpu6500Reset();
   vTaskDelay(M2T(50));
   // Activate MPU6500

@@ -9,6 +9,7 @@
 #include "task.h"
 
 #include "vl6180.h"
+#include "debug.h"
 
 #define VL6180_I2C_ADDR 0x29
 
@@ -87,7 +88,7 @@ void vl6180Init(I2C_Dev *i2cPort){
 	vl6180SetRegister(VL6180_SYSALS_ANALOGUE_GAIN,0x40);
 	vl6180SetRegister(VL6180_FIRMWARE_RESULT_SCALER,0x01);
 
-	DEBUG_PRINT("Range sensor initialized");
+	DEBUG_PRINT("Range sensor initialized %d", 1);
 
 	isInit = 1;
 	//	return 0;
@@ -104,20 +105,20 @@ uint8_t vl6180GetRegister(uint16_t registerAddress){
 	return data;
 }
 
-uint16_t vl6180GetRegister16(uint16_t registerAddress){
-	uint16_t data;
-	//Read a byte from the register on the device
-	i2cdevRead16(I2Cx,devAddr,registerAddress,2,(uint8_t)&data);
-	return data;
-}
+//uint16_t vl6180GetRegister16(uint16_t registerAddress){
+//	uint8_t data;
+//	//Read a byte from the register on the device
+//	i2cdevRead16(I2Cx,devAddr,registerAddress,2,&data);
+//	return (uint16_t)data;
+//}
 
 void vl6180SetRegister(uint16_t registerAddress, uint8_t data){
 	i2cdevWrite(I2Cx,devAddr,registerAddress,1,&data);
 }
 
-void vl6180SetRegister16(uint16_t registerAddress, uint16_t data){
-	i2cdevWrite(I2Cx,devAddr,registerAddress,2,&data);
-}
+//void vl6180SetRegister16(uint16_t registerAddress, uint16_t data){
+//	i2cdevWrite(I2Cx,devAddr,registerAddress,2,&data);
+//}
 
 uint8_t vl6180GetRange(void){
 	vl6180SetRegister(VL6180_SYSRANGE_START, 0x01);

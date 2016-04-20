@@ -51,6 +51,7 @@
 #include "position_controller.h"
 #include "altitude_hold.h"
 #include "vl6180.h"
+#include "debug.h"
 
 /**
  * Defines in what divided update rate should the attitude

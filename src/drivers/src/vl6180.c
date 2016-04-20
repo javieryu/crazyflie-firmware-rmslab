@@ -88,13 +88,18 @@ void vl6180Init(I2C_Dev *i2cPort){
 	vl6180SetRegister(VL6180_SYSALS_ANALOGUE_GAIN,0x40);
 	vl6180SetRegister(VL6180_FIRMWARE_RESULT_SCALER,0x01);
 
-	DEBUG_PRINT("Range sensor initialized %d", 1);
+//	DEBUG_PRINT("Range sensor initialized %d", 1);
 
 	isInit = 1;
 	//	return 0;
 }
 
 bool vl6180Test(void){
+	if (isInit) {
+		DEBUG_PRINT("Range sensor initialized %d", 1);
+	} else {
+		DEBUG_PRINT("Range sensor not initialized %d", 0);
+	}
 	return isInit;
 }
 

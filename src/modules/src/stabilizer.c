@@ -287,7 +287,7 @@ static void stabilizerTask(void* param)
 
         if (vl6180Test()==1){
         	range = vl6180GetRange();
-        	DEBUG_PRINT("Range: %d\n", (int)range);
+//        	DEBUG_PRINT("Range: %d\n", (int)range);
         }
 
         altHoldCounter = 0;

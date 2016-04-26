@@ -111,7 +111,7 @@ static float temperature; // temp from barometer in celcius
 static float pressure;    // pressure from barometer in bar
 static float asl;         // raw Altitude over Sea Level from pressure sensor, in meters. Has an offset.
 static estimate_t estimatedPosition;
-static uint8_t range;
+//static uint8_t range;
 
 
 void stabilizerInit(void)
@@ -285,11 +285,11 @@ static void stabilizerTask(void* param)
           commanderGetThrust(&actuatorThrust);
         }
 
-        if (vl6180Test()==1){
-        	range = vl6180GetRange();
-//        	DEBUG_PRINT("Range: %d\n", (int)range);
-        }
-
+//        if (vl6180Test()==1){
+//        	range = vl6180GetRange();
+////        	DEBUG_PRINT("Range: %d\n", (int)range);
+//        }
+//        range = 6;
         altHoldCounter = 0;
       }
 
@@ -487,8 +487,8 @@ LOG_ADD(LOG_INT32, m2, &motorPowerM2)
 LOG_ADD(LOG_INT32, m3, &motorPowerM3)
 LOG_GROUP_STOP(motor)
 
-LOG_GROUP_START(rangefinder)
-LOG_ADD(LOG_INT8, range, &range)
-LOG_GROUP_STOP(rangefinder)
+//LOG_GROUP_START(rangefinder)
+//LOG_ADD(LOG_INT8, range, &range)
+//LOG_GROUP_STOP(rangefinder)
 
 

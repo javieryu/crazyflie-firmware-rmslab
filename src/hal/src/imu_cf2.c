@@ -160,9 +160,9 @@ void imu6Init(void)
   }
 
   if (vl6180Test() == 1) {
-	  DEBUG_PRINT("Range sensor initialized %d", 1);
+	  DEBUG_PRINT("VL6180 initialized %d \n", 1);
   } else {
-	  DEBUG_PRINT("Range sensor not initialized %d", 0);
+	  DEBUG_PRINT("VL6180 not initialized %d \n", 0);
   }
   mpu6500Reset();
   vTaskDelay(M2T(50));

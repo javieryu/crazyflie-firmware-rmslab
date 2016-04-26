@@ -36,6 +36,8 @@
 #include "param.h"
 #include "log.h"
 
+#include "vl6180.h"
+
 #include "stm32fxxx.h"
 
 /* Flag indicating if the proximityInit() function has been called or not. */
@@ -151,6 +153,9 @@ static void proximityTask(void* param)
     proximityDistance = maxSonarReadDistance(MAXSONAR_MB1040_AN, &proximityAccuracy);
 #endif
 
+#if defined(VL6180_ENABLED)
+    proximityDistance = vl6180GetRange();
+#endif
     /* Get the latest average value calculated. */
     proximityDistanceAvg = proximitySWinAdd(proximityDistance);
 

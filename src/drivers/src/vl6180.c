@@ -93,20 +93,20 @@ bool vl6180Test(void){
 	uint8_t modelid;
 	modelid = vl6180GetRegister(VL6180_IDENTIFICATION_MODEL_ID);
 
-	DEBUG_PRINT("VL6180 test get model ID: %d \n", modelid);
+	DEBUG_PRINT("VL6180 test get model ID: %.2f \n", (float)modelid);
 
-	return isInit;
+	return 1;
 }
 
 uint8_t vl6180GetRegister(uint16_t registerAddress){
 	uint8_t data;
 	//Read a byte from the register on the device
-	i2cdevRead16(I2Cx,devAddr,registerAddress,2,&data);
+	i2cdevRead16(I2Cx,devAddr,(registerAddress << 8),2,&data);
 	return data;
 }
 
 void vl6180SetRegister(uint16_t registerAddress, uint8_t data){
-	i2cdevWrite(I2Cx,devAddr,registerAddress,2,&data);
+	i2cdevWrite(I2Cx,devAddr,(registerAddress << 8),2,&data);
 }
 
 //uint16_t vl6180GetRegister16(uint16_t registerAddress){
@@ -121,9 +121,11 @@ void vl6180SetRegister(uint16_t registerAddress, uint8_t data){
 //}
 
 uint8_t vl6180GetRange(void){
+	uint8_t data;
+
 	vl6180SetRegister(VL6180_SYSRANGE_START, 0x01);
 	vTaskDelay(M2T(100));
-	uint8_t data =  vl6180GetRegister(VL6180_RESULT_RANGE_VAL);
+	data = vl6180GetRegister(VL6180_RESULT_RANGE_VAL);
 	vl6180SetRegister(VL6180_SYSTEM_INTERRUPT_CLEAR, 0x07);
 
 	//DEBUG_PRINT("getRange Function call %d \n", (int) data);

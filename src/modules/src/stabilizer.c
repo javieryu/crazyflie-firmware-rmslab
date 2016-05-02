@@ -126,9 +126,9 @@ void stabilizerInit(void)
   vl6180Init(I2C1_DEV);
 
   if (vl6180Test() == 1) {
-  	  DEBUG_PRINT("VL6180 initialized %d \n", 1);
+  	  DEBUG_PRINT("VL6180 initialized [OK]. \n");
     } else {
-  	  DEBUG_PRINT("VL6180 not initialized %d \n", 0);
+  	  DEBUG_PRINT("VL6180 not initialized [FAIL]. \n");
     }
 
 #if defined(SITAW_ENABLED)

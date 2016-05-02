@@ -123,7 +123,14 @@ void stabilizerInit(void)
   imu6Init();
   sensfusion6Init();
   attitudeControllerInit();
-  //vl6180Init(
+  vl6180Init(I2C1_DEV);
+
+  if (vl6180Test() == 1) {
+  	  DEBUG_PRINT("VL6180 initialized %d \n", 1);
+    } else {
+  	  DEBUG_PRINT("VL6180 not initialized %d \n", 0);
+    }
+
 #if defined(SITAW_ENABLED)
   sitAwInit();
 #endif

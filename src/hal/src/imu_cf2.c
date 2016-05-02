@@ -149,7 +149,7 @@ void imu6Init(void)
 
   i2cdevInit(I2C3_DEV);
   mpu6500Init(I2C3_DEV);
-  vl6180Init(I2C1_DEV);
+
   if (mpu6500TestConnection() == true)
   {
     DEBUG_PRINT("MPU9250 I2C connection [OK].\n");
@@ -159,11 +159,6 @@ void imu6Init(void)
     DEBUG_PRINT("MPU9250 I2C connection [FAIL].\n");
   }
 
-  if (vl6180Test() == 1) {
-	  DEBUG_PRINT("VL6180 initialized %d \n", 1);
-  } else {
-	  DEBUG_PRINT("VL6180 not initialized %d \n", 0);
-  }
   mpu6500Reset();
   vTaskDelay(M2T(50));
   // Activate MPU6500

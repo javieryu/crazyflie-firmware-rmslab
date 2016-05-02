@@ -154,7 +154,7 @@ static void proximityTask(void* param)
 #endif
 
 #if defined(VL6180_ENABLED)
-    proximityDistance = vl6180GetRange();
+    proximityDistance = (uint32_t) vl6180GetRange();
 #endif
     /* Get the latest average value calculated. */
     proximityDistanceAvg = proximitySWinAdd(proximityDistance);

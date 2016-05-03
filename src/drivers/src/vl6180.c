@@ -17,7 +17,7 @@ static bool isInit;
 
 void vl6180Init(I2C_Dev *i2cPort){
 
-	uint8_t data;
+	//uint8_t data;
 
 	if(isInit)
 		return;
@@ -25,12 +25,13 @@ void vl6180Init(I2C_Dev *i2cPort){
 	I2Cx = i2cPort;
 	devAddr = VL6180_I2C_ADDR;
 
-	data = vl6180GetRegister(VL6180_SYSTEM_FRESH_OUT_OF_RESET);
-	if(data != 1) return;
+	//data = vl6180GetRegister(VL6180_SYSTEM_FRESH_OUT_OF_RESET);
+	//if(data != 1) return;
 
-	vl6180SetRegister16(0x0207, 0x01);
-	vl6180SetRegister16(0x0207, 0x01);
-	vl6180SetRegister16(0x0208, 0x01);
+	isInit = 1;
+
+	vl6180SetRegister(0x0207, 0x01);
+	vl6180SetRegister(0x0208, 0x01);
 	vl6180SetRegister(0x0096, 0x00);
 	vl6180SetRegister(0x0097, 0xfd);
 	vl6180SetRegister(0x00e3, 0x00);
@@ -49,22 +50,22 @@ void vl6180Init(I2C_Dev *i2cPort){
 	vl6180SetRegister(0x00bb, 0x3c);
 	vl6180SetRegister(0x00b2, 0x09);
 	vl6180SetRegister(0x00ca, 0x09);
-	vl6180SetRegister16(0x0198, 0x01);
-	vl6180SetRegister16(0x01b0, 0x17);
-	vl6180SetRegister16(0x01ad, 0x00);
+	vl6180SetRegister(0x0198, 0x01);
+	vl6180SetRegister(0x01b0, 0x17);
+	vl6180SetRegister(0x01ad, 0x00);
 	vl6180SetRegister(0x00ff, 0x05);
-	vl6180SetRegister16(0x0100, 0x05);
-	vl6180SetRegister16(0x0199, 0x05);
-	vl6180SetRegister16(0x01a6, 0x1b);
-	vl6180SetRegister16(0x01ac, 0x3e);
-	vl6180SetRegister16(0x01a7, 0x1f);
+	vl6180SetRegister(0x0100, 0x05);
+	vl6180SetRegister(0x0199, 0x05);
+	vl6180SetRegister(0x01a6, 0x1b);
+	vl6180SetRegister(0x01ac, 0x3e);
+	vl6180SetRegister(0x01a7, 0x1f);
 	vl6180SetRegister(0x0030, 0x00);
 
 	//Enable Interrupts on Conversion Complete (any source)
 	vl6180SetRegister(VL6180_SYSTEM_INTERRUPT_CONFIG_GPIO, (4 << 3)|(4) ); // Set GPIO1 high when sample complete
 
 	vl6180SetRegister(VL6180_SYSTEM_MODE_GPIO1, 0x10); // Set GPIO1 high when sample complete
-	vl6180SetRegister16(VL6180_READOUT_AVERAGING_SAMPLE_PERIOD, 0x30); //Set Avg sample period
+	vl6180SetRegister(VL6180_READOUT_AVERAGING_SAMPLE_PERIOD, 0x30); //Set Avg sample period
 	vl6180SetRegister(VL6180_SYSALS_ANALOGUE_GAIN, 0x46); // Set the ALS gain
 	vl6180SetRegister(VL6180_SYSRANGE_VHV_REPEAT_RATE, 0xFF); // Set auto calibration period (Max = 255)/(OFF = 0)
 	vl6180SetRegister(VL6180_SYSALS_INTEGRATION_PERIOD, 0x63); // Set ALS integration time to 100ms
@@ -82,11 +83,9 @@ void vl6180Init(I2C_Dev *i2cPort){
 	vl6180SetRegister(VL6180_SYSRANGE_EARLY_CONVERGENCE_ESTIMATE, 0x7B );
 	vl6180SetRegister(VL6180_SYSALS_INTEGRATION_PERIOD, 0x64);
 
-	vl6180SetRegister16(VL6180_READOUT_AVERAGING_SAMPLE_PERIOD,0x30);
+	vl6180SetRegister(VL6180_READOUT_AVERAGING_SAMPLE_PERIOD,0x30);
 	vl6180SetRegister(VL6180_SYSALS_ANALOGUE_GAIN,0x40);
-	vl6180SetRegister16(VL6180_FIRMWARE_RESULT_SCALER,0x01);
-
-	isInit = 1;
+	vl6180SetRegister(VL6180_FIRMWARE_RESULT_SCALER,0x01);
 }
 
 bool vl6180Test(void){
@@ -95,7 +94,7 @@ bool vl6180Test(void){
 
 	DEBUG_PRINT("VL6180 test get model ID: %.2f \n", (float)modelid);
 
-	return 1;
+	return isInit;
 }
 
 uint8_t vl6180GetRegister(uint16_t registerAddress){
@@ -106,7 +105,7 @@ uint8_t vl6180GetRegister(uint16_t registerAddress){
 }
 
 void vl6180SetRegister(uint16_t registerAddress, uint8_t data){
-	i2cdevWrite(I2Cx,devAddr,(registerAddress << 8),2,&data);
+	i2cdevWrite(I2Cx,devAddr,(registerAddress << 8),1,&data);
 }
 
 //uint16_t vl6180GetRegister16(uint16_t registerAddress){
@@ -116,9 +115,9 @@ void vl6180SetRegister(uint16_t registerAddress, uint8_t data){
 //	return (uint16_t)data;
 //}
 
-void vl6180SetRegister16(uint16_t registerAddress, uint16_t data){
-	i2cdevWrite(I2Cx,devAddr,registerAddress,2,&data);
-}
+//void vl6180SetRegister16(uint16_t registerAddress, uint8_t data){
+//	i2cdevWrite(I2Cx,devAddr,registerAddress,2,&data);
+//}
 
 uint8_t vl6180GetRange(void){
 	uint8_t data;
@@ -128,7 +127,7 @@ uint8_t vl6180GetRange(void){
 	data = vl6180GetRegister(VL6180_RESULT_RANGE_VAL);
 	vl6180SetRegister(VL6180_SYSTEM_INTERRUPT_CLEAR, 0x07);
 
-	//DEBUG_PRINT("getRange Function call %d \n", (int) data);
+	DEBUG_PRINT("getRange Function call %d \n", (int) data);
 
 	return data;
 }

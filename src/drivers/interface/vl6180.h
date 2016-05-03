@@ -90,7 +90,7 @@ uint16_t vl6180GetRegister16(uint16_t);
 
 void vl6180SetRegister(uint16_t, uint8_t);
 
-void vl6180SetRegister16(uint16_t,uint16_t);
+void vl6180SetRegister16(uint16_t,uint8_t);
 
 uint8_t vl6180GetRange(void);
 

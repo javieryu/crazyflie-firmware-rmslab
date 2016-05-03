@@ -17,7 +17,7 @@ static bool isInit;
 
 void vl6180Init(I2C_Dev *i2cPort){
 
-	//uint8_t data;
+	uint8_t data;
 
 	if(isInit)
 		return;
@@ -25,8 +25,10 @@ void vl6180Init(I2C_Dev *i2cPort){
 	I2Cx = i2cPort;
 	devAddr = VL6180_I2C_ADDR;
 
-	//data = vl6180GetRegister(VL6180_SYSTEM_FRESH_OUT_OF_RESET);
-	//if(data != 1) return;
+	data = vl6180GetRegister(VL6180_SYSTEM_FRESH_OUT_OF_RESET);
+	DEBUG_PRINT("Fresh out of reset value: %d \n", data);
+
+	if(data != 0) return;
 
 	isInit = 1;
 

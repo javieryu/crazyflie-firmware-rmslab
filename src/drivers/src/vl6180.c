@@ -32,7 +32,10 @@ void vl6180Init(I2C_Dev *i2cPort){
 
 	isInit = 1;
 
-	vl6180SetRegister(0x0207, 0x01);
+	int x;
+	x = vl6180SetRegister(0x0207, 0x01);
+	DEBUG_PRINT("Set register status: %d \n", x);
+
 	vl6180SetRegister(0x0208, 0x01);
 	vl6180SetRegister(0x0096, 0x00);
 	vl6180SetRegister(0x0097, 0xfd);
@@ -106,7 +109,7 @@ uint8_t vl6180GetRegister(uint16_t registerAddress){
 	return data;
 }
 
-void vl6180SetRegister(uint16_t registerAddress, uint8_t data){
+int vl6180SetRegister(uint16_t registerAddress, uint8_t data){
 	uint8_t buff[3];
 	buff[0] = registerAddress >> 8;
 	buff[1] = registerAddress & 0xFF;
@@ -118,7 +121,7 @@ void vl6180SetRegister(uint16_t registerAddress, uint8_t data){
 //	i2cdevWriteByte(I2Cx,devAddr,*buffer,data);
 //	i2cdevWriteByte(I2Cx,devAddr,temp[1],data);
 
-	i2cdevWrite(I2Cx, devAddr, I2CDEV_NO_MEM_ADDR, 3, buff);
+	return (int) i2cdevWrite(I2Cx, devAddr, I2CDEV_NO_MEM_ADDR, 3, buff);
 }
 
 //uint16_t vl6180GetRegister16(uint16_t registerAddress){

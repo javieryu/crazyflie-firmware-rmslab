@@ -105,15 +105,18 @@ uint8_t vl6180GetRegister(uint16_t registerAddress){
 }
 
 void vl6180SetRegister(uint16_t registerAddress, uint8_t data){
-	uint8_t *temp;
-	temp[0] = registerAddress>>8;
-	temp[1] = registerAddress&0xFF;
+	uint8_t buff[3];
+	buff[0] = registerAddress >> 8;
+	buff[1] = registerAddress & 0xFF;
+	buff[2] = data;
 
 	//i2cdevWrite(I2Cx,devAddr,temp[0],1,&data);
 	//i2cdevWrite(I2Cx,devAddr,temp[1],1,&data);
 
-	i2cdevWriteByte(I2Cx,devAddr,*temp,data);
+//	i2cdevWriteByte(I2Cx,devAddr,*buffer,data);
 //	i2cdevWriteByte(I2Cx,devAddr,temp[1],data);
+
+	i2cdevWrite(I2Cx, devAddr, I2CDEV_NO_MEM_ADDR, 3, buff);
 }
 
 //uint16_t vl6180GetRegister16(uint16_t registerAddress){

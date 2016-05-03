@@ -35,7 +35,8 @@ void vl6180Init(I2C_Dev *i2cPort){
 	int x;
 	x = vl6180SetRegister(0x0207, 0x01);
 	DEBUG_PRINT("Set register status: %d \n", x);
-
+	DEBUG_PRINT("Register data --> Expected: %x, Actual: %x\n", 0x01,
+			vl6180GetRegister(0x0207));
 	vl6180SetRegister(0x0208, 0x01);
 	vl6180SetRegister(0x0096, 0x00);
 	vl6180SetRegister(0x0097, 0xfd);
